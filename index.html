@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>代码格式化</title>
+	<script type="text/javascript" src="beautify.js"></script>
+	<style>
+	.resizable{
+	    width: 998px;
+	    height: 200px;
+        border: 1px solid #ccc;
+	}
+	</style>
+</head>
+<body>
+	<div id="header">
+	<div class="wrapper">
+		<div id="mainSearch">
+
+
+<div class="go_search">
+<!-- Place this tag where you want the search box to render -->
+</div>
+		</div>
+		<div id="logo" class="texthidden" onclick="javascript:location.href='/'">
+			<h1>开源中国在线工具</h1>
+		</div>
+	</div>
+</div>
+
+<textarea name="js" id="jsdata" onchange="do_js_beautify()" onkeyup="do_js_beautify()" style="resize:none;" class="resizable processed"></textarea>
+
+<div class="operateTB form-inline">
+	缩进方式：
+	<select name="tabsize" id="tabsize" class="span2" onchange="do_js_beautify()">
+          <option value="1">Tab符缩进</option>
+          <option value="2">2个空格缩进</option>
+          <option value="4" selected="selected">4个空格缩进</option>
+          <option value="8">8个空格缩进</option>
+        </select>
+	<input class="btn btn-small btn-primary" data-loading-text="正在格式化js..." id="format" type="button" onclick="do_js_beautify()" value="格式化">
+	<input class="btn btn-small btn-success" id="copy_format" data-clipboard-target="fjs" type="button" value="复制格式化代码">
+</div>
+
+<textarea id="fjs" name="fjs" style="resize:none;" class="resizable processed"></textarea>
+
+<script type="text/javascript">
+$ = window.$ = function(id){
+	return document.getElementById(id);
+}
+document.getElementById('format').addEventListener('click',do_js_beautify);
+    function do_js_beautify() {
+        $("fjs").innerHTML ="";
+		var js_source =$('jsdata').value.replace(/^\s+/, '');
+		if(js_source.length==0)
+			return;
+        var tabsize = $('tabsize').value;
+        tabchar = ' ';
+        if (tabsize == 1)
+          tabchar = '\t';
+        var fjs = js_beautify(js_source, tabsize, tabchar);
+		$("fjs").innerText = fjs;
+	}
+</script>
+</body>
+</html>
